@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: verdana;
+  }
+  .mainWrapper {
+      margin: 0 auto;
+      width: 55%;
+  }
+  h2 {
+      padding:0;
+      margin: 0 0 20px;
+      font-size: 26px;
+      text-transform: uppercase;
+  }
+  
+  /* Include the padding and border in an element's total width and height */
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Remove margins and padding from the list */
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Style the list items */
+  ul li {
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    list-style-type: none;
+    font-size: 16px;
+    line-height: 30px;
+    transition: 0.2s;
+    border-bottom: 1px solid #ddd;
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  ul li div{
+    display: inline-block;
+    max-width: 60%;
+  }
+  ul li div.border{
+    border: 2px solid #000;
+    border-radius: 4px;
+    padding: 0px 5px;
+  }
+  ul li span{
+      font-size: 24px;
+      float: right;
+      padding: 5px 7px;
+      margin-right: 5px;
+      cursor: pointer;
+      background: #ddd;
+  }
+  ul li span:hover {
+      background: #000;
+      color: #fff;
+  }
+  
+  /* Style the header */
+  .header {
+    background-color: #4CAF50;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+  }
+  
+  /* Clear floats after the header */
+  .header:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Style the input */
+  input {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+  }
+  
+  /* Style the "Add" button */
+  .addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #333;
+    color: #fff;
+    font-weight: bold;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+  }
+  
+  .addBtn:hover {
+    background-color: #000;
+  }
+  .clearBtn {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 10px 25px;
+    cursor: pointer;
+  }
+  .mrgnTop{
+      margin-top: 35px;
+  }
