@@ -1,25 +1,30 @@
+//Event handler for enable list
+document.addEventListener("DOMContentLoaded", initList);
 
-(function(){
-
+function initList(){
     let listHolder = [];    
+    
+    //get data from local storage
+    function getOldData(){    
+         let oldList = localStorage.getItem('listHolder');
+            //console.log(oldList);
+         if(oldList){
+                listHolder = JSON.parse(oldList);
+                addItem(listHolder);
+         }
+     }
+    getOldData();
     
     //Function for save to local
     function saveToLocal(data){
         localStorage.setItem('listHolder', JSON.stringify(data));
     }
 
-    //Event handler for localstorage content    
-    document.addEventListener("DOMContentLoaded", function(event) { 
-        let oldList = localStorage.getItem('listHolder');
-        //console.log(oldList);
-        if(oldList){
-            listHolder = JSON.parse(oldList);
-            addItem(listHolder);
-        }
-    });
-    
     //add element to list with input value
-    document.querySelector('.addBtn').addEventListener('click', () => {itemFinder(document.querySelector('#myInput').value);} )
+    document.querySelector('.addBtn').addEventListener('click', function(){
+        let getEle = document.querySelector('#myInput');
+        itemFinder(getEle.value);
+    })
 
     //check value and in old list value have or not after that it will add
     function itemFinder(currValue){
@@ -90,6 +95,7 @@
             let updateInner = createInner('span', 'class', 'fa fa-check update');
             updateInner.addEventListener('click', editableItem);
             parent.appendChild(updateInner);
+            
             listHolder = listHolder.filter(item =>  item.itemContent == e.currentTarget.childNodes[0].childNodes[0].nodeValue );
             saveToLocal(listHolder);
         }
@@ -102,7 +108,6 @@
         e.currentTarget.parentElement.remove();   
     }
     
-    //clear list 
     document.querySelector('.clearBtn').addEventListener('click', function(){
         listHolder.length > 0 ? clearList() : alert("We dont have list Items");
         function clearList(){
@@ -119,4 +124,4 @@
         
     });
 
-})()
+}
