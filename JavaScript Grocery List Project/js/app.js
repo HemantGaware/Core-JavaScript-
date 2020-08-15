@@ -96,7 +96,7 @@ function initList(){
             updateInner.addEventListener('click', editableItem);
             parent.appendChild(updateInner);
             
-            listHolder = listHolder.filter(item =>  item.itemContent == e.currentTarget.childNodes[0].childNodes[0].nodeValue );
+            listHolder = listHolder.filter(item =>  item.itemContent !== e.currentTarget.childNodes[0].childNodes[0].nodeValue );
             saveToLocal(listHolder);
         }
         
