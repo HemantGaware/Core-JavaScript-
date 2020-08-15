@@ -1,16 +1,21 @@
-//Event handler for localstorage content    
-    document.addEventListener("DOMContentLoaded", initList);
+//Event handler for enable list
+document.addEventListener("DOMContentLoaded", initList);
+
 function initList(){
 
     
     let listHolder = [];    
     
-     let oldList = localStorage.getItem('listHolder');
-        //console.log(oldList);
-     if(oldList){
-            listHolder = JSON.parse(oldList);
-            addItem(listHolder);
+    //get data from local storage
+    function getOldData(){    
+         let oldList = localStorage.getItem('listHolder');
+            //console.log(oldList);
+         if(oldList){
+                listHolder = JSON.parse(oldList);
+                addItem(listHolder);
+         }
      }
+    getOldData();
     
     //Function for save to local
     function saveToLocal(data){
@@ -104,7 +109,7 @@ function initList(){
     //Edittable item halder function 
     function editableItem(e){
         itemFinder(document.querySelector('.border.content').childNodes[0].nodeValue);
-        let parent = e.currentTarget.parentElement.remove();   
+        e.currentTarget.parentElement.remove();   
     }
     
     document.querySelector('.clearBtn').addEventListener('click', function(){
