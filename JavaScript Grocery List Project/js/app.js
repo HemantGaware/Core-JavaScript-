@@ -11,7 +11,7 @@
     //Event handler for localstorage content    
     document.addEventListener("DOMContentLoaded", function(event) { 
         let oldList = localStorage.getItem('listHolder');
-        console.log(oldList);
+        //console.log(oldList);
         if(oldList){
             listHolder = JSON.parse(oldList);
             addItem(listHolder);
