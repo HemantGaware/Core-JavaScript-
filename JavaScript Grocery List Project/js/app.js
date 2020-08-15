@@ -1,22 +1,23 @@
+//Event handler for localstorage content    
+    document.addEventListener("DOMContentLoaded", initList);
+function initList(){
 
-(function(){
-
+    
     let listHolder = [];    
+    
+     let oldList = localStorage.getItem('listHolder');
+        //console.log(oldList);
+     if(oldList){
+            listHolder = JSON.parse(oldList);
+            addItem(listHolder);
+     }
     
     //Function for save to local
     function saveToLocal(data){
         localStorage.setItem('listHolder', JSON.stringify(data));
     }
 
-    //Event handler for localstorage content    
-    document.addEventListener("DOMContentLoaded", function(event) { 
-        let oldList = localStorage.getItem('listHolder');
-        //console.log(oldList);
-        if(oldList){
-            listHolder = JSON.parse(oldList);
-            addItem(listHolder);
-        }
-    });
+    
     
     //add element to list with input value
     document.querySelector('.addBtn').addEventListener('click', function(){
@@ -122,4 +123,4 @@
         
     });
 
-})()
+}
