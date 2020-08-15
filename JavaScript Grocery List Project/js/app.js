@@ -3,10 +3,12 @@
 
     let listHolder = [];    
     
+    //Function for save to local
     function saveToLocal(data){
         localStorage.setItem('listHolder', JSON.stringify(data));
     }
 
+    //Event handler for localstorage content    
     document.addEventListener("DOMContentLoaded", function(event) { 
         let oldList = localStorage.getItem('listHolder');
         console.log(oldList);
@@ -16,34 +18,41 @@
         }
     });
     
+    //add element to list with input value
     document.querySelector('.addBtn').addEventListener('click', function(){
         let getEle = document.querySelector('#myInput');
-        if(getEle.value.trim().length > 0){
-            checkValue(getEle.value).length > 0 ?  alert(` " ${getEle.value} " Already avalable in the list`) : addlist() ;
+        itemFinder(getEle.value);
+    })
+
+    //check value and in old list value have or not after that it will add
+    function itemFinder(currValue){
+        if(currValue.trim().length > 0){
+            checkValue(currValue).length > 0 ?  alert(` " ${currValue} " Already avalable in the list`) : addlist() ;
         }else{
             alert('Please add value');
+            return false;
         }
         function addlist(){
-            let item = {itemContent: getEle.value, itemStatus: false};
+            let item = {itemContent: currValue, itemStatus: false};
             addItem([item]);
-            getEle.value = '';
+            document.querySelector('#myInput').value = '';
             listHolder.push(item);
             saveToLocal(listHolder);
+            return true;
         }
         function checkValue(value){
             return listHolder.filter(ele =>  ele.itemContent == value );
         }
-    })
-
+    }
     
-    function addItem(item){
-        let listWrap = document.querySelector('#myUL');
-        item.forEach(element => {
-            listWrap.appendChild(createItem(element.itemContent));
-        });
-        
+    //Create element for list
+    function createInner(ele, att, value){
+        let editEle = document.createElement(ele);
+        editEle.setAttribute(att, value);
+        return editEle;
     }
 
+    //Create item for list
     function createItem(value){
         let li = document.createElement('li');
         let transEle = createInner('span', 'class', 'fa fa-trash-o delete');
@@ -57,42 +66,46 @@
         li.addEventListener('click', addDeleteEvt, false);
         return li;
     }
-
-    function createInner(ele, att, value){
-        let editEle = document.createElement(ele);
-        editEle.setAttribute(att, value);
-        return editEle;
+    
+    //Add item to list
+    function addItem(item){
+        let listWrap = document.querySelector('#myUL');
+        item.forEach(element => {
+            listWrap.appendChild(createItem(element.itemContent));
+        });
+        
     }
-
     function addDeleteEvt(e){
         if(e.target.classList.contains('delete')){
+            //Here delete element
             listHolder = listHolder.filter(item =>  item.itemContent !== e.currentTarget.childNodes[0].childNodes[0].nodeValue );
             e.currentTarget.remove();
             saveToLocal(listHolder);
         }else if(e.target.classList.contains('edit')){
-            console.log('item editable');
-            /*
-            Working on editing list item
+            
+            //Here edit element
             let parent = e.currentTarget;
             parent.childNodes[0].setAttribute('contenteditable', 'true');
             parent.childNodes[0].classList.add('border');
-            
+            parent.childNodes[0].focus();
             //Array.from(parent.children).splice(1,3);
             e.target.remove();
             let updateInner = createInner('span', 'class', 'fa fa-check update');
             updateInner.addEventListener('click', editableItem);
             parent.appendChild(updateInner);
-            */
+            
+            listHolder = listHolder.filter(item =>  item.itemContent == e.currentTarget.childNodes[0].childNodes[0].nodeValue );
+            saveToLocal(listHolder);
         }
         
     }
-
-    /*
-    Working on editing list item
-    function editableItem(){
-        let getVal = document.querySelector('.border.content').value;
+    
+    //Edittable item halder function 
+    function editableItem(e){
+        itemFinder(document.querySelector('.border.content').childNodes[0].nodeValue);
+        let parent = e.currentTarget.parentElement.remove();   
     }
-    */
+    
     document.querySelector('.clearBtn').addEventListener('click', function(){
         listHolder.length > 0 ? clearList() : alert("We dont have list Items");
         function clearList(){
