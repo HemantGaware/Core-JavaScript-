@@ -1,0 +1,82 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+html,body{
+    height: 100%;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* slides wrapper */
+.sliderWrapper{
+    overflow: hidden;
+    max-height: 400px;
+    width: 100%;
+}
+/*  all slide wrapper */
+.slides{
+  max-width: 1200px;
+  width: 75%;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* slides */
+.slide {
+    display: none
+}
+
+.slides .slide > img{
+    vertical-align: middle;
+    width: 100%;
+    max-height: none;
+}
+
+/* Next & previous buttons */
+.slider-arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 8px 16px;
+  margin-top: -22px;
+  color: #000;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  user-select: none;
+  outline: none;
+}
+
+/* Position the "next and prev buttons"*/
+.nextSlide {
+  right: 30px;
+  border-radius: 50px;
+}
+.prevSlide {
+    left: 30px;
+    border-radius: 50px;
+}
+
+/* On hover, change bg and color */
+.slider-arrow:hover {
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+}
+
+/* css for fade class for image appearnce */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .3} 
+  to {opacity: 1}
+}
