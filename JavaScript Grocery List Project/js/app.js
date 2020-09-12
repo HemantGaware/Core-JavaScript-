@@ -1,22 +1,33 @@
+//Event handler for enable list
+document.addEventListener("DOMContentLoaded", initList);
 
-(function(){
+function initList(){
 
+    
     let listHolder = [];    
+    
+    //get data from local storage
+    function getOldData(){  
+            if (typeof(Storage) !== "undefined") {
+                let oldList = localStorage.getItem('listHolder');
+                 if(oldList){
+                        listHolder = JSON.parse(oldList);
+                        addItem(listHolder);
+                 }
+             }
+         
+     }
+    getOldData();
     
     //Function for save to local
     function saveToLocal(data){
-        localStorage.setItem('listHolder', JSON.stringify(data));
+        if (typeof(Storage) !== "undefined") {
+               localStorage.setItem('listHolder', JSON.stringify(data));
+         }
+        
     }
 
-    //Event handler for localstorage content    
-    document.addEventListener("DOMContentLoaded", function(event) { 
-        let oldList = localStorage.getItem('listHolder');
-        console.log(oldList);
-        if(oldList){
-            listHolder = JSON.parse(oldList);
-            addItem(listHolder);
-        }
-    });
+    
     
     //add element to list with input value
     document.querySelector('.addBtn').addEventListener('click', function(){
@@ -55,6 +66,7 @@
     //Create item for list
     function createItem(value){
         let li = document.createElement('li');
+        li.setAttribute('data-item', value);
         let transEle = createInner('span', 'class', 'fa fa-trash-o delete');
         transEle.setAttribute('class', 'fa fa-trash-o delete');
         let editEle = createInner('span', 'class', 'fa fa-pencil edit');
@@ -78,7 +90,7 @@
     function addDeleteEvt(e){
         if(e.target.classList.contains('delete')){
             //Here delete element
-            listHolder = listHolder.filter(item =>  item.itemContent !== e.currentTarget.childNodes[0].childNodes[0].nodeValue );
+            listHolder = listHolder.filter(item =>  item.itemContent !== e.currentTarget.getAttribute("data-item") );
             e.currentTarget.remove();
             saveToLocal(listHolder);
         }else if(e.target.classList.contains('edit')){
@@ -94,7 +106,7 @@
             updateInner.addEventListener('click', editableItem);
             parent.appendChild(updateInner);
             
-            listHolder = listHolder.filter(item =>  item.itemContent == e.currentTarget.childNodes[0].childNodes[0].nodeValue );
+            listHolder = listHolder.filter(item =>  item.itemContent !== e.currentTarget.getAttribute("data-item") );
             saveToLocal(listHolder);
         }
         
@@ -103,7 +115,7 @@
     //Edittable item halder function 
     function editableItem(e){
         itemFinder(document.querySelector('.border.content').childNodes[0].nodeValue);
-        let parent = e.currentTarget.parentElement.remove();   
+        e.currentTarget.parentElement.remove();   
     }
     
     document.querySelector('.clearBtn').addEventListener('click', function(){
@@ -117,9 +129,12 @@
                 listWrap.removeChild(child); 
                 child = listWrap.lastElementChild; 
             } 
-            localStorage.removeItem("listHolder");
+            
+            if (typeof(Storage) !== "undefined") {
+               localStorage.removeItem("listHolder");
+            }
         }
         
     });
 
-})()
+}
