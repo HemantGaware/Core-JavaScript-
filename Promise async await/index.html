@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+
+
+        async function goConsole( word ){
+           
+                function createImage(url){
+                        let image = document.createElement('img');
+                        image.src = url;
+                        document.body.append(image);
+                }
+                try{
+                    let response = await fetch(`http://api.giphy.com/v1/gifs/search?q=${word}&api_key=dc6zaTOxFJmzC&limit=1`);
+                    let img = await response.json(); 
+                    if (img.data.length === 0) {
+                        throw new SyntaxError("Incomplete data: image not found, So we are showing default image "); // (*)
+                    }
+                    createImage(img.data[0].images.downsized.url);
+                } catch(error){
+                    console.log(error);
+                    createImage('./header.jpg');
+                }
+        }
+
+        async function getWord(){
+
+            function createPara(text){
+                let para = document.createElement('p');
+                    para.innerHTML = text;
+                    document.body.append(para);
+                    goConsole(text);
+            }
+             try{
+                let response = await fetch(`http://api.wordnik.com/v4/words.json/randomWord?api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5`);
+                let word = await response.json();  
+
+                if (!word.word) {
+                    throw new SyntaxError("Incomplete data: No word "); 
+                }
+                createPara(word.word)
+                    
+             } catch(error){
+                console.log(error);
+                createPara('oops')
+                
+             }  
+        }
+        getWord();
+        
+    </script>
+</body>
+</html>
